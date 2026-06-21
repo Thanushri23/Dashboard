@@ -1,0 +1,28 @@
+.navbar {
+  background: transparent !important; /* Managed by employee.css */
+  height: 100%;
+}
+
+.search-input {
+  border-radius: 20px;
+  background-color: #f1f5f9;
+  border: none;
+  padding-left: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.profile-img {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.profile-img:hover {
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}

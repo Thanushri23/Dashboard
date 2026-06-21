@@ -1,0 +1,35 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  background: #f0f4f8; /* Soft background */
+  overflow: hidden;
+}
+
+app-sidebar {
+  width: 260px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+app-navbar {
+  height: 70px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  z-index: 10;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px;
+}

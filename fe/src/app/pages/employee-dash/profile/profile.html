@@ -1,0 +1,41 @@
+<div class="card p-4 shadow-sm border-0 rounded-4">
+  <h4 class="mb-4 fw-bold text-primary"><i class="bi bi-person-badge me-2"></i>My Profile</h4>
+
+  <div *ngIf="!user" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="user" class="row g-4">
+    <div class="col-md-4 text-center">
+      <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; border: 4px solid #fff; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+        <i class="bi bi-person fs-1 text-primary"></i>
+      </div>
+      <h5 class="fw-bold mb-1">{{user.name}}</h5>
+      <p class="text-muted small mb-0">{{user.position || 'Employee'}}</p>
+      <span class="badge bg-primary rounded-pill mt-2">{{user.role | uppercase}}</span>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card bg-light border-0 p-4 rounded-4 h-100">
+        <h6 class="fw-bold mb-3 border-bottom pb-2">Contact & Department Details</h6>
+        
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <p class="small text-muted mb-1 fw-bold">Email</p>
+            <p class="mb-0 text-dark fw-semibold"><i class="bi bi-envelope me-2 text-primary"></i>{{user.email}}</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="small text-muted mb-1 fw-bold">Phone Number</p>
+            <p class="mb-0 text-dark fw-semibold"><i class="bi bi-telephone me-2 text-primary"></i>{{user.phone || 'Not provided'}}</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="small text-muted mb-1 fw-bold">Department</p>
+            <p class="mb-0 text-dark fw-semibold"><i class="bi bi-building me-2 text-primary"></i>{{user.department || 'Not assigned'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

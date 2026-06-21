@@ -1,0 +1,42 @@
+<div class="card p-4 shadow-sm border-0 rounded-4">
+  <h4 class="mb-4 fw-bold text-primary">My Tasks</h4>
+  
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    <input type="text" class="form-control flex-grow-1" style="min-width: 200px;" placeholder="Task Title" [(ngModel)]="newTask.title">
+    <input type="text" class="form-control flex-grow-1" style="min-width: 200px;" placeholder="Task Description" [(ngModel)]="newTask.description">
+    <button class="btn btn-primary px-4 fw-semibold" (click)="addTask()">Add Task</button>
+  </div>
+
+  <div *ngIf="tasks.length === 0" class="text-center text-muted py-5 bg-light rounded-3 border border-dashed">
+    <i class="bi bi-clipboard-x fs-1"></i>
+    <p class="mt-2 mb-0">No tasks found. Create one above!</p>
+  </div>
+
+  <div class="d-flex flex-column gap-3">
+    <div *ngFor="let task of tasks" class="border p-3 rounded-3 shadow-sm d-flex flex-wrap justify-content-between align-items-center bg-white transition-hover" style="border-left: 4px solid #0d6efd !important;">
+      
+      <div class="flex-grow-1 mb-2 mb-sm-0" *ngIf="editingTaskId !== task._id">
+        <h6 class="mb-1 fw-bold text-dark">{{task.title}}</h6>
+        <p class="mb-0 text-muted small">{{task.description}}</p>
+      </div>
+
+      <!-- Edit Mode -->
+      <div class="flex-grow-1 d-flex flex-wrap gap-2 me-3 mb-2 mb-sm-0" *ngIf="editingTaskId === task._id">
+        <input type="text" class="form-control form-control-sm w-auto flex-grow-1" [(ngModel)]="editTaskData.title">
+        <input type="text" class="form-control form-control-sm w-auto flex-grow-1" [(ngModel)]="editTaskData.description">
+      </div>
+
+      <div class="d-flex gap-2">
+        <ng-container *ngIf="editingTaskId !== task._id">
+          <button class="btn btn-sm btn-outline-secondary" (click)="startEdit(task)">Edit</button>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task._id)">Delete</button>
+        </ng-container>
+        <ng-container *ngIf="editingTaskId === task._id">
+          <button class="btn btn-sm btn-success" (click)="saveEdit(task._id)">Save</button>
+          <button class="btn btn-sm btn-light" (click)="cancelEdit()">Cancel</button>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+</div>
