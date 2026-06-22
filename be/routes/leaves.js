@@ -8,7 +8,7 @@ const auth = require('../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     let leaves;
-    if (req.user.role === 'admin') {
+    if (req.user.role === 'admin' || req.user.role === 'manager') {
       leaves = await Leave.find().populate('userId', 'name email role position');
     } else {
       leaves = await Leave.find({ userId: req.user.id }).populate('userId', 'name email role position');
@@ -37,7 +37,7 @@ router.post('/', auth, async (req, res) => {
 // ✅ UPDATE leave status (Admin only)
 router.put('/:id', auth, async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'admin' && req.user.role !== 'manager') {
       return res.status(403).json({ msg: "Not authorized to update leave status" });
     }
 

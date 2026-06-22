@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     let tasks;
-    if (req.user.role === 'admin') {
+    if (req.user.role === 'admin' || req.user.role === 'manager') {
       tasks = await Task.find().populate('userId', 'name email');
     } else {
       tasks = await Task.find({ userId: req.user.id }).populate('userId', 'name email');
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
   try {
     // Admin can specify a userId, otherwise it defaults to the logged-in user
-    const taskUserId = (req.user.role === 'admin' && req.body.userId) ? req.body.userId : req.user.id;
+    const taskUserId = ((req.user.role === 'admin' || req.user.role === 'manager') && req.body.userId) ? req.body.userId : req.user.id;
     
     const task = new Task({
       ...req.body,
@@ -40,7 +40,7 @@ router.post('/', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     const query = { _id: req.params.id };
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'admin' && req.user.role !== 'manager') {
       query.userId = req.user.id; // Non-admins can only delete their own
     }
 
@@ -61,7 +61,7 @@ router.delete('/:id', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
   try {
     const query = { _id: req.params.id };
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'admin' && req.user.role !== 'manager') {
       query.userId = req.user.id; // Non-admins can only update their own
     }
 
