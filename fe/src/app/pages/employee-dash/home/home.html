@@ -1,61 +1,120 @@
-<div class="d-flex flex-column gap-4">
-  <div class="card p-4 shadow-sm border-0 rounded-4">
-    <h4 class="mb-4 fw-bold text-primary"><i class="bi bi-list-task me-2"></i>Recent Tasks</h4>
-    
-    <div *ngIf="tasks.length === 0" class="text-center text-muted py-4 bg-light rounded-3 border border-dashed">
-      <p class="mb-0">No tasks assigned.</p>
+<div class="p-1">
+  <!-- Greeting -->
+  <div class="page-header mb-4">
+    <div class="page-header-icon"><i class="bi bi-house-door"></i></div>
+    <div>
+      <h2 class="page-title">Dashboard</h2>
+      <p class="page-subtitle">Here's what's happening today</p>
     </div>
+  </div>
 
-    <div class="d-flex flex-column gap-3" *ngIf="tasks.length > 0">
-      <div *ngFor="let task of tasks.slice(0, 5)" class="border p-3 rounded-3 shadow-sm bg-white" style="border-left: 4px solid #0d6efd !important;">
-        <div class="d-flex align-items-center justify-content-between mb-1">
-          <h6 class="mb-0 fw-bold text-dark">{{task.title}}</h6>
-          <span class="badge" 
-                [ngClass]="{
-                  'bg-warning text-dark': task.status === 'pending',
-                  'bg-success': task.status === 'completed'
-                }">
-            {{task.status || 'pending' | uppercase}}
-          </span>
-        </div>
-        <p class="mb-0 text-muted small">{{task.description}}</p>
+  <!-- Stats row -->
+  <div class="row g-3 mb-4">
+    <div class="col-sm-4">
+      <div class="card p-3 text-center" style="border-left: 4px solid #2563eb;">
+        <div style="font-size:1.8rem;font-weight:800;color:#2563eb;">{{tasks.length}}</div>
+        <div style="font-size:0.82rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Total Tasks</div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card p-3 text-center" style="border-left: 4px solid #f59e0b;">
+        <div style="font-size:1.8rem;font-weight:800;color:#f59e0b;">{{leaves.length}}</div>
+        <div style="font-size:0.82rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Leave Requests</div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card p-3 text-center" style="border-left: 4px solid #16a34a;">
+        <div style="font-size:1.8rem;font-weight:800;color:#16a34a;">{{activeTasksCount}}</div>
+        <div style="font-size:0.82rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Active Tasks</div>
       </div>
     </div>
   </div>
 
-  <div class="card p-4 shadow-sm border-0 rounded-4">
-    <h4 class="mb-4 fw-bold text-primary"><i class="bi bi-calendar-event me-2"></i>Recent Leaves</h4>
+  <!-- Recent Tasks -->
+  <div class="section-heading"><i class="bi bi-list-task me-2"></i>Recent Tasks</div>
 
-    <div *ngIf="leaves.length === 0" class="text-center text-muted py-4 bg-light rounded-3 border border-dashed">
-      <p class="mb-0">No leave requests found.</p>
-    </div>
+  <div *ngIf="tasks.length === 0" class="empty-state mb-4">
+    <i class="bi bi-clipboard-x"></i>
+    <p class="mb-0 fw-semibold">No tasks assigned</p>
+    <p class="small mt-1">Your manager will assign tasks soon</p>
+  </div>
 
-    <div class="table-responsive" *ngIf="leaves.length > 0">
-      <table class="table table-hover align-middle border rounded-3 mb-0">
-        <thead class="table-light">
-          <tr>
-            <th class="ps-3 py-2">Date</th>
-            <th class="py-2">Reason</th>
-            <th class="pe-3 py-2 text-end">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let leave of leaves.slice(0, 5)">
-            <td class="ps-3 small">{{leave.startDate | date}} to {{leave.endDate | date}}</td>
-            <td class="small">{{leave.reason}}</td>
-            <td class="pe-3 text-end">
-              <span class="badge rounded-pill px-2" 
-                    [ngClass]="{
-                      'bg-warning text-dark': leave.status === 'pending',
-                      'bg-success': leave.status === 'approved',
-                      'bg-danger': leave.status === 'rejected'
-                    }">
-                {{leave.status | uppercase}}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="d-flex flex-column gap-3 mb-4" *ngIf="tasks.length > 0">
+    <div *ngFor="let task of tasks.slice(0, 5)" class="item-card">
+      <!-- View mode -->
+      <div class="flex-grow-1 mb-2 mb-sm-0" *ngIf="editingTaskId !== task._id">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <p class="item-title">{{task.title}}</p>
+          <span class="badge rounded-pill px-3 py-1"
+                [ngClass]="{
+                  'bg-warning text-dark': task.status === 'pending',
+                  'bg-success text-white': task.status === 'completed'
+                }">
+            <i class="bi me-1" [ngClass]="{'bi-hourglass-split': task.status === 'pending', 'bi-check-circle': task.status === 'completed'}"></i>
+            {{task.status || 'pending' | uppercase}}
+          </span>
+        </div>
+        <p class="item-desc">{{task.description}}</p>
+      </div>
+
+      <!-- Edit mode -->
+      <div class="flex-grow-1 d-flex flex-wrap gap-2 me-3 mb-2 mb-sm-0" *ngIf="editingTaskId === task._id">
+        <input type="text" class="form-control form-control-sm" style="min-width:160px; flex:1;" [(ngModel)]="editTaskData.title" placeholder="Task title">
+        <input type="text" class="form-control form-control-sm" style="min-width:200px; flex:2;" [(ngModel)]="editTaskData.description" placeholder="Description">
+      </div>
+
+      <!-- Action buttons -->
+      <div class="d-flex gap-2 flex-shrink-0 align-items-start">
+        <ng-container *ngIf="editingTaskId !== task._id">
+          <button class="btn btn-sm btn-outline-secondary" (click)="startEdit(task)">
+            <i class="bi bi-pencil me-1"></i>Edit
+          </button>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task._id)">
+            <i class="bi bi-trash me-1"></i>Delete
+          </button>
+        </ng-container>
+        <ng-container *ngIf="editingTaskId === task._id">
+          <button class="btn btn-sm btn-primary" (click)="saveEdit(task._id)">
+            <i class="bi bi-check-lg me-1"></i>Save
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+        </ng-container>
+      </div>
     </div>
+  </div>
+
+  <!-- Recent Leaves -->
+  <div class="section-heading"><i class="bi bi-calendar-event me-2"></i>Recent Leave History</div>
+
+  <div *ngIf="leaves.length === 0" class="empty-state">
+    <i class="bi bi-calendar-x"></i>
+    <p class="mb-0 fw-semibold">No leave requests found</p>
+    <p class="small mt-1">Apply for leave from the Leaves section</p>
+  </div>
+
+  <div class="blue-table" *ngIf="leaves.length > 0">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th class="ps-3">Date Range</th>
+          <th>Reason</th>
+          <th class="pe-3 text-end">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leave of leaves.slice(0, 5)">
+          <td class="ps-3 small fw-semibold" style="color:#1e293b;">{{leave.startDate | date}} → {{leave.endDate | date}}</td>
+          <td class="small" style="color:#64748b;">{{leave.reason}}</td>
+          <td class="pe-3 text-end">
+            <span class="badge rounded-pill px-3 py-1"
+                  [ngClass]="{'bg-warning text-dark': leave.status === 'pending'}"
+                  [style.background]="leave.status === 'approved' ? '#16a34a' : leave.status === 'rejected' ? '#dc2626' : ''"
+                  [style.color]="leave.status !== 'pending' ? 'white' : ''">
+              {{leave.status | uppercase}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

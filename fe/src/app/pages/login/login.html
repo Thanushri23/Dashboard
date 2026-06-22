@@ -1,22 +1,61 @@
-<div class="container mt-5">
-  <div class="card p-4 col-md-4 mx-auto shadow">
-    <h3 class="text-center mb-3">Login</h3>
-
-    <input type="email"
-           [(ngModel)]="email"
-           placeholder="Email"
-           class="form-control mb-2">
-
-    <input type="password"
-           [(ngModel)]="password"
-           placeholder="Password"
-           class="form-control mb-3">
-
-    <button class="btn btn-primary w-100" (click)="login()">Login</button>
-
-    <p class="text-center mt-3">
-      Don't have an account?
-      <a routerLink="/register">Register</a>
-    </p>
+<div class="login-wrapper">
+  <!-- Left panel - branding -->
+  <div class="login-brand-panel">
+    <div class="brand-content">
+      <div class="brand-icon">
+        <i class="bi bi-hexagon-fill"></i>
+      </div>
+      <h1 class="brand-title">Employee Portal</h1>
+      <p class="brand-subtitle">Manage your tasks, leaves, and team effortlessly.</p>
+      <div class="brand-features">
+        <div class="feature-item"><i class="bi bi-check-circle-fill me-2"></i>Task Management</div>
+        <div class="feature-item"><i class="bi bi-check-circle-fill me-2"></i>Leave Tracking</div>
+        <div class="feature-item"><i class="bi bi-check-circle-fill me-2"></i>Team Collaboration</div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- Right panel - form -->
+  <div class="login-form-panel">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-icon">
+          <i class="bi bi-person-lock"></i>
+        </div>
+        <h2 class="login-title">Welcome Back</h2>
+        <p class="login-desc">Sign in to your account to continue</p>
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom">Email Address</label>
+        <div class="input-wrapper">
+          <i class="bi bi-envelope input-icon"></i>
+          <input type="email"
+                 [(ngModel)]="email"
+                 placeholder="you@company.com"
+                 class="form-control-custom">
+        </div>
+      </div>
+
+      <div class="form-group-custom">
+        <label class="form-label-custom">Password</label>
+        <div class="input-wrapper">
+          <i class="bi bi-lock input-icon"></i>
+          <input type="password"
+                 [(ngModel)]="password"
+                 placeholder="Enter your password"
+                 class="form-control-custom">
+        </div>
+      </div>
+
+      <button class="btn-login" (click)="login()">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+      </button>
+
+      <p class="login-footer">
+        Don't have an account?
+        <a routerLink="/register" class="login-link">Create Account</a>
+      </p>
+    </div>
+  </div>
+</div>

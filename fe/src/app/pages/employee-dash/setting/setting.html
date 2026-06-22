@@ -1,11 +1,31 @@
-<div class="card p-4 shadow-sm border-0 rounded-4">
-  <h4 class="mb-4 fw-bold text-primary"><i class="bi bi-gear me-2"></i>Settings</h4>
+<div class="p-1">
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="page-header-icon"><i class="bi bi-gear"></i></div>
+    <div>
+      <h2 class="page-title">Settings</h2>
+      <p class="page-subtitle">Manage your account preferences</p>
+    </div>
+  </div>
 
-  <div class="card bg-light border-0 p-4 rounded-4 mb-4">
-    <h6 class="fw-bold text-dark mb-3">Account Actions</h6>
-    <p class="text-muted small mb-3">Sign out of your account on this device. You will need your credentials to log back in.</p>
-    <button class="btn btn-danger fw-semibold shadow-sm w-auto px-4" (click)="logout()">
-      <i class="bi bi-box-arrow-right me-2"></i>Logout
-    </button>
+  <!-- Logout card -->
+  <div class="card" style="max-width:480px;">
+    <div class="card-body p-4">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div style="width:40px;height:40px;background:#fee2e2;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#dc2626;font-size:1.2rem;">
+          <i class="bi bi-box-arrow-right"></i>
+        </div>
+        <div>
+          <div style="font-weight:700;color:#1e293b;font-size:0.95rem;">Account Actions</div>
+          <div style="color:#64748b;font-size:0.82rem;">Manage your session</div>
+        </div>
+      </div>
+      <p style="color:#64748b;font-size:0.88rem;margin-bottom:1.25rem;">
+        Sign out of your account on this device. You will need your credentials to log back in.
+      </p>
+      <button class="btn btn-danger fw-semibold px-4" (click)="logout()">
+        <i class="bi bi-box-arrow-right me-2"></i>Logout
+      </button>
+    </div>
   </div>
 </div>

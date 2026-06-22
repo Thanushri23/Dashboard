@@ -1,1 +1,2 @@
-/* Admin Profile CSS */
+/* Imports shared page styles from tasks.css */
+@import '../tasks/tasks.css';

@@ -1,1 +1,2 @@
-/* home.css */
+/* Imports shared page styles */
+@import '../../admin/tasks/tasks.css';

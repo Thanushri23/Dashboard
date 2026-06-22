@@ -1,48 +1,71 @@
-<div class="card p-4 shadow-sm border-0 rounded-4">
-  <h5 class="fw-bold mb-4 text-primary"><i class="bi bi-calendar-event me-2"></i>Employee Leave Requests</h5>
-  
-  <div *ngIf="leaves.length === 0" class="text-center text-muted py-5 bg-light rounded-3 border border-dashed">
-    <p class="mt-2 mb-0 fs-5">No leave requests found.</p>
+<div class="p-1">
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="page-header-icon"><i class="bi bi-calendar-event"></i></div>
+    <div>
+      <h2 class="page-title">Leave Requests</h2>
+      <p class="page-subtitle">Review and manage employee leave applications</p>
+    </div>
   </div>
-  
-  <div class="table-responsive border rounded-3" *ngIf="leaves.length > 0">
+
+  <!-- Empty state -->
+  <div *ngIf="leaves.length === 0" class="empty-state">
+    <i class="bi bi-calendar-x"></i>
+    <p class="mb-0 fw-semibold">No leave requests found</p>
+    <p class="small mt-1">Employee leave applications will appear here</p>
+  </div>
+
+  <!-- Leave table -->
+  <div class="blue-table" *ngIf="leaves.length > 0">
     <table class="table table-hover align-middle mb-0">
-      <thead class="table-light">
+      <thead>
         <tr>
-          <th class="ps-3 py-3">Employee</th>
-          <th class="py-3">Duration</th>
-          <th class="py-3">Reason</th>
-          <th class="py-3">Status</th>
-          <th class="pe-3 py-3 text-end">Actions</th>
+          <th class="ps-3">Employee</th>
+          <th>Duration</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th class="pe-3 text-end">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let leave of leaves">
-          <td class="ps-3 fw-semibold text-dark">
-            {{leave.userId?.name}} 
-            <span class="d-block text-muted small fw-normal"><i class="bi bi-envelope me-1"></i>{{leave.userId?.email}}</span>
+          <td class="ps-3">
+            <div class="fw-semibold" style="color:#1e293b;">{{leave.userId?.name}}</div>
+            <div class="small" style="color:#64748b;">
+              <i class="bi bi-envelope me-1" style="color:#93c5fd;"></i>{{leave.userId?.email}}
+            </div>
           </td>
           <td>
-            <span class="d-block small text-muted">{{leave.startDate | date}} to</span>
-            <span class="d-block small text-muted">{{leave.endDate | date}}</span>
+            <div class="small fw-semibold" style="color:#1e293b;">{{leave.startDate | date}}</div>
+            <div class="small" style="color:#64748b;">to {{leave.endDate | date}}</div>
           </td>
-          <td>{{leave.reason}}</td>
+          <td style="color:#334155;">{{leave.reason}}</td>
           <td>
-            <span class="badge rounded-pill px-3 py-2 shadow-sm border" 
+            <span class="badge rounded-pill px-3 py-2"
                   [ngClass]="{
-                    'bg-warning text-dark border-warning': leave.status === 'pending',
-                    'bg-success border-success text-white': leave.status === 'approved',
-                    'bg-danger border-danger text-white': leave.status === 'rejected'
-                  }">
+                    'bg-warning text-dark': leave.status === 'pending',
+                    'text-white': leave.status !== 'pending'
+                  }"
+                  [style.background]="leave.status === 'approved' ? '#16a34a' : leave.status === 'rejected' ? '#dc2626' : ''">
+              <i class="bi me-1"
+                 [ngClass]="{
+                   'bi-hourglass-split': leave.status === 'pending',
+                   'bi-check-circle': leave.status === 'approved',
+                   'bi-x-circle': leave.status === 'rejected'
+                 }"></i>
               {{leave.status | uppercase}}
             </span>
           </td>
           <td class="pe-3 text-end">
-            <div class="btn-group shadow-sm" *ngIf="leave.status === 'pending'">
-              <button class="btn btn-sm btn-success fw-semibold" (click)="updateLeave(leave._id, 'approved')">Approve</button>
-              <button class="btn btn-sm btn-danger fw-semibold" (click)="updateLeave(leave._id, 'rejected')">Reject</button>
+            <div class="d-flex gap-2 justify-content-end" *ngIf="leave.status === 'pending'">
+              <button class="btn btn-sm btn-success fw-semibold" (click)="updateLeave(leave._id, 'approved')">
+                <i class="bi bi-check-lg me-1"></i>Approve
+              </button>
+              <button class="btn btn-sm btn-danger fw-semibold" (click)="updateLeave(leave._id, 'rejected')">
+                <i class="bi bi-x-lg me-1"></i>Reject
+              </button>
             </div>
-            <span class="badge bg-light text-secondary border px-3 py-2 shadow-sm" *ngIf="leave.status !== 'pending'">
+            <span class="badge px-3 py-2 rounded-pill" style="background:#dbeafe; color:#1d4ed8;" *ngIf="leave.status !== 'pending'">
               <i class="bi bi-check2-circle me-1"></i>Processed
             </span>
           </td>

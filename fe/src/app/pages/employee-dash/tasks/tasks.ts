@@ -23,6 +23,8 @@ export class Tasks implements OnInit {
     description: ''
   };
 
+  isSubmitting = false;
+
   constructor(private taskService: TasksService) {}
 
   ngOnInit() {
@@ -36,10 +38,17 @@ export class Tasks implements OnInit {
   }
 
   addTask() {
-    if (!this.newTask.title) return;
-    this.taskService.addTask(this.newTask).subscribe(() => {
-      this.newTask = { title: '', description: '' };
-      this.loadTasks();
+    if (!this.newTask.title || this.isSubmitting) return;
+    this.isSubmitting = true;
+    this.taskService.addTask(this.newTask).subscribe({
+      next: () => {
+        this.newTask = { title: '', description: '' };
+        this.loadTasks();
+        this.isSubmitting = false;
+      },
+      error: () => {
+        this.isSubmitting = false;
+      }
     });
   }
 

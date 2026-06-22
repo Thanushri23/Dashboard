@@ -1,55 +1,74 @@
-<div class="card p-4 shadow-sm border-0 rounded-4">
-  <h4 class="mb-4 fw-bold text-primary">Leave Management</h4>
-  
-  <div class="card bg-light border-0 mb-4 p-4 rounded-4">
-    <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-calendar-plus me-2"></i>Apply for Leave</h6>
-    <div class="row g-3">
+<div class="p-1">
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="page-header-icon"><i class="bi bi-calendar2-week"></i></div>
+    <div>
+      <h2 class="page-title">Leave Management</h2>
+      <p class="page-subtitle">Apply and track your leave requests</p>
+    </div>
+  </div>
+
+  <!-- Apply for leave form -->
+  <div class="form-panel">
+    <div class="form-panel-title"><i class="bi bi-calendar-plus"></i> Apply for Leave</div>
+    <div class="row g-3 align-items-end">
       <div class="col-md-3">
-        <label class="form-label small text-muted fw-bold mb-1">Start Date</label>
-        <input type="date" class="form-control border-0 shadow-sm" [(ngModel)]="newLeave.startDate">
+        <label class="info-label mb-1">Start Date</label>
+        <input type="date" class="form-control" [(ngModel)]="newLeave.startDate">
       </div>
       <div class="col-md-3">
-        <label class="form-label small text-muted fw-bold mb-1">End Date</label>
-        <input type="date" class="form-control border-0 shadow-sm" [(ngModel)]="newLeave.endDate">
+        <label class="info-label mb-1">End Date</label>
+        <input type="date" class="form-control" [(ngModel)]="newLeave.endDate">
       </div>
       <div class="col-md-4">
-        <label class="form-label small text-muted fw-bold mb-1">Reason</label>
-        <input type="text" class="form-control border-0 shadow-sm" placeholder="Reason for leave" [(ngModel)]="newLeave.reason">
+        <label class="info-label mb-1">Reason</label>
+        <input type="text" class="form-control" placeholder="Reason for leave" [(ngModel)]="newLeave.reason">
       </div>
-      <div class="col-md-2 d-flex align-items-end">
-        <button class="btn btn-primary w-100 fw-semibold shadow-sm" (click)="applyLeave()">Submit</button>
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100 fw-semibold" (click)="applyLeave()" [disabled]="isSubmitting">
+          <i class="bi bi-send me-1" *ngIf="!isSubmitting"></i>
+          <span class="spinner-border spinner-border-sm me-1" *ngIf="isSubmitting" role="status" aria-hidden="true"></span>
+          {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+        </button>
       </div>
     </div>
   </div>
 
-  <h5 class="fw-bold mb-3">My Leave History</h5>
+  <!-- Leave history -->
+  <div class="section-heading"><i class="bi bi-clock-history me-2"></i>My Leave History</div>
 
-  <div *ngIf="leaves.length === 0" class="text-center text-muted py-5 bg-light rounded-3 border border-dashed">
-    <p class="mt-2 mb-0 fs-5">No leave requests found.</p>
+  <div *ngIf="leaves.length === 0" class="empty-state">
+    <i class="bi bi-calendar-x"></i>
+    <p class="mb-0 fw-semibold">No leave requests found</p>
+    <p class="small mt-1">Submit a leave application using the form above</p>
   </div>
 
-  <div class="table-responsive" *ngIf="leaves.length > 0">
-    <table class="table table-hover align-middle border">
-      <thead class="table-light">
+  <div class="blue-table" *ngIf="leaves.length > 0">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
         <tr>
-          <th class="ps-3 py-3">Start Date</th>
-          <th class="py-3">End Date</th>
-          <th class="py-3">Reason</th>
-          <th class="pe-3 py-3 text-end">Status</th>
+          <th class="ps-3">Start Date</th>
+          <th>End Date</th>
+          <th>Reason</th>
+          <th class="pe-3 text-end">Status</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let leave of leaves">
-          <td class="ps-3">{{leave.startDate | date}}</td>
-          <td>{{leave.endDate | date}}</td>
-          <td>{{leave.reason}}</td>
+          <td class="ps-3 small fw-semibold" style="color:#1e293b;">{{leave.startDate | date}}</td>
+          <td class="small fw-semibold" style="color:#1e293b;">{{leave.endDate | date}}</td>
+          <td class="small" style="color:#64748b;">{{leave.reason}}</td>
           <td class="pe-3 text-end">
-            <span class="badge rounded-pill px-3 py-2 shadow-sm" 
-                  [ngClass]="{
-                    'bg-warning text-dark': leave.status === 'pending',
-                    'bg-success': leave.status === 'approved',
-                    'bg-danger': leave.status === 'rejected'
-                  }">
+            <span class="badge rounded-pill px-3 py-2"
+                  [ngClass]="{'bg-warning text-dark': leave.status === 'pending'}"
+                  [style.background]="leave.status === 'approved' ? '#16a34a' : leave.status === 'rejected' ? '#dc2626' : ''"
+                  [style.color]="leave.status !== 'pending' ? 'white' : ''">
+              <i class="bi me-1"
+                 [ngClass]="{
+                   'bi-hourglass-split': leave.status === 'pending',
+                   'bi-check-circle': leave.status === 'approved',
+                   'bi-x-circle': leave.status === 'rejected'
+                 }"></i>
               {{leave.status | uppercase}}
             </span>
           </td>

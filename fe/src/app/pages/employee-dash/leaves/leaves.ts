@@ -18,6 +18,8 @@ export class Leaves implements OnInit {
     reason: ''
   };
 
+  isSubmitting = false;
+
   constructor(private leaveService: LeavesService) {}
 
   ngOnInit() {
@@ -31,10 +33,17 @@ export class Leaves implements OnInit {
   }
 
   applyLeave() {
-    if (!this.newLeave.startDate || !this.newLeave.endDate || !this.newLeave.reason) return;
-    this.leaveService.applyLeave(this.newLeave).subscribe(() => {
-      this.newLeave = { startDate: '', endDate: '', reason: '' };
-      this.loadLeaves();
+    if (!this.newLeave.startDate || !this.newLeave.endDate || !this.newLeave.reason || this.isSubmitting) return;
+    this.isSubmitting = true;
+    this.leaveService.applyLeave(this.newLeave).subscribe({
+      next: () => {
+        this.newLeave = { startDate: '', endDate: '', reason: '' };
+        this.loadLeaves();
+        this.isSubmitting = false;
+      },
+      error: () => {
+        this.isSubmitting = false;
+      }
     });
   }
 }

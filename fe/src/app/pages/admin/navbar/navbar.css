@@ -1,37 +1,88 @@
 .navbar {
   height: 70px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e9ecef;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid #dbeafe;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(30,64,175,0.06);
+  display: flex;
+  align-items: center;
+  padding: 0 1.75rem;
+  justify-content: space-between;
 }
 
 .search-input {
-  background-color: #f8f9fa;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
+  background: #f0f6ff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  transition: all 0.25s ease;
+  color: #1e293b;
+  width: 100%;
 }
 
+.search-input::placeholder { color: #93c5fd; }
+
 .search-input:focus {
-  background-color: #ffffff;
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
   outline: none;
 }
 
-.hover-text-primary:hover {
-  color: #0d6efd !important;
+.navbar-clock {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #f0f6ff;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #dbeafe;
 }
 
-.transition {
+.notification-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f0f6ff;
+  border: 1.5px solid #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   transition: all 0.2s ease;
+  color: #64748b;
+  font-size: 1.05rem;
+}
+
+.notification-btn:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #2563eb;
+}
+
+.notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
 }
 
 .profile-img {
   cursor: pointer;
-  transition: transform 0.2s ease;
+  border: 2.5px solid #bfdbfe;
+  border-radius: 12px !important;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(30,64,175,0.15);
 }
 
 .profile-img:hover {
-  transform: scale(1.05);
+  border-color: #2563eb;
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.25);
 }

@@ -1,25 +1,37 @@
-<div class="sidebar vh-100 px-3">
-  <h4><i class="bi bi-hexagon-fill me-2 text-white"></i>Admin Portal</h4>
+<div class="sidebar vh-100">
+  <div class="sidebar-brand">
+    <i class="bi bi-hexagon-fill"></i>
+    <h4>Admin Portal</h4>
+  </div>
 
-  <ul class="nav flex-column mt-4">
+  <p class="sidebar-subtitle">Main Menu</p>
+
+  <ul class="nav flex-column">
     <li class="nav-item">
       <a routerLink="/manager/tasks" routerLinkActive="active" class="nav-link">
-        <i class="bi bi-list-task fs-5"></i> Tasks
+        <i class="bi bi-list-task"></i> Tasks
       </a>
     </li>
     <li class="nav-item">
       <a routerLink="/manager/leaves" routerLinkActive="active" class="nav-link">
-        <i class="bi bi-calendar2-week fs-5"></i> Leaves
+        <i class="bi bi-calendar2-week"></i> Leaves
       </a>
     </li>
     <li class="nav-item">
       <a routerLink="/manager/profile" routerLinkActive="active" class="nav-link">
-        <i class="bi bi-person-badge fs-5"></i> Profile
+        <i class="bi bi-person-badge"></i> Profile
       </a>
     </li>
-    <li class="nav-item mt-4">
+  </ul>
+
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-divider"></div>
+
+  <p class="sidebar-subtitle">Account</p>
+  <ul class="nav flex-column mb-3">
+    <li class="nav-item">
       <a routerLink="/manager/settings" routerLinkActive="active" class="nav-link">
-        <i class="bi bi-gear fs-5"></i> Settings
+        <i class="bi bi-gear"></i> Settings
       </a>
     </li>
   </ul>

@@ -1,25 +1,23 @@
-<nav class="navbar w-100 px-4 d-flex align-items-center justify-content-between">
-  
-  <div class="d-flex align-items-center w-50">
-    <div class="position-relative w-50">
-      <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-      <input type="text" placeholder="Search everywhere..." class="form-control search-input ps-5 py-2">
-    </div>
+<nav class="navbar w-100">
+  <!-- Search -->
+  <div class="position-relative" style="width: 280px;">
+    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color:#93c5fd; font-size:0.9rem;"></i>
+    <input type="text" placeholder="Search anything..." class="search-input">
   </div>
 
-  <div class="d-flex align-items-center gap-4">
-    <div class="text-muted fw-semibold d-none d-md-block">
-      <i class="bi bi-clock me-2"></i>{{time}}
-    </div>
-    
-    <div class="position-relative">
-      <i class="bi bi-bell fs-5 text-muted cursor-pointer hover-text-primary transition" style="cursor: pointer;"></i>
-      <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-        <span class="visually-hidden">New alerts</span>
-      </span>
+  <!-- Right side -->
+  <div class="d-flex align-items-center gap-3">
+    <div class="navbar-clock">
+      <i class="bi bi-clock me-1"></i>{{time}}
     </div>
 
-    <img src="https://ui-avatars.com/api/?name=Employee&background=0D8ABC&color=fff" class="rounded-circle shadow-sm profile-img" width="40" height="40" alt="Profile">
+    <div class="notification-btn">
+      <i class="bi bi-bell"></i>
+      <span class="notif-dot"></span>
+    </div>
+
+    <img src="https://ui-avatars.com/api/?name=Employee&background=1d4ed8&color=fff&bold=true"
+         class="profile-img"
+         width="40" height="40" alt="Employee Profile">
   </div>
-
 </nav>

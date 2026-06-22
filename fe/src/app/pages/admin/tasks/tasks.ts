@@ -26,6 +26,8 @@ export class AdminTasks implements OnInit {
     description: ''
   };
 
+  isSubmitting = false;
+
   constructor(
     private taskService: TasksService,
     private userService: UserService
@@ -41,10 +43,18 @@ export class AdminTasks implements OnInit {
   }
 
   addTask() {
-    if (!this.newTask.title || !this.newTask.userId) return;
-    this.taskService.addTask(this.newTask).subscribe(() => {
-      this.newTask = { title: '', description: '', userId: '' };
-      this.loadData();
+    if (!this.newTask.title || !this.newTask.userId || this.isSubmitting) return;
+    this.isSubmitting = true;
+    this.taskService.addTask(this.newTask).subscribe({
+      next: () => {
+        this.newTask = { title: '', description: '', userId: '' };
+        this.loadData();
+        this.isSubmitting = false;
+      },
+      error: (err) => {
+        console.error("Error adding task", err);
+        this.isSubmitting = false;
+      }
     });
   }
 
